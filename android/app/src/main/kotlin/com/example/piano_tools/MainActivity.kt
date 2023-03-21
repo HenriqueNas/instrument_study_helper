@@ -1,4 +1,4 @@
-package com.example.piano_tools
+package com.example.instrument_study_helper
 
 import io.flutter.embedding.android.FlutterActivity
 

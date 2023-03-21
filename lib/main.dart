@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:piano_tools/theme/theme.provider.dart';
 
 import 'home.page.dart';
+import 'theme/theme.provider.dart';
 
 void main() {
   runApp(const MyApp());

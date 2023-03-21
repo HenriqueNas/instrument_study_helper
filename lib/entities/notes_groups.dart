@@ -1,4 +1,4 @@
-import 'package:piano_tools/entities/base_notes.dart';
+import 'base_notes.dart';
 
 class NotesGroups {
   static final List<String> first = [

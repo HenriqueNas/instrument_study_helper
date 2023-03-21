@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:piano_tools/theme/theme.provider.dart';
+
+import '../../theme/theme.provider.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

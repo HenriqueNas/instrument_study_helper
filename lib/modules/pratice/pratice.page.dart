@@ -1,13 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:piano_tools/entities/accidentals_notes.dart';
-import 'package:piano_tools/entities/notes_groups.dart';
-import 'package:piano_tools/modules/pratice/widgets/timer.widget.dart';
 
+import '../../entities/accidentals_notes.dart';
+import '../../entities/notes_groups.dart';
 import 'pratice.provider.dart';
 import 'widgets/accidental_tile.widget.dart';
 import 'widgets/group_tile.widget.dart';
+import 'widgets/timer.widget.dart';
 
 class PraticePage extends StatefulWidget {
   const PraticePage({super.key});

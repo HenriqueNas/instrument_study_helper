@@ -1,6 +1,6 @@
 {
-    "name": "piano_tools",
-    "short_name": "piano_tools",
+    "name": "instrument_study_helper",
+    "short_name": "instrument_study_helper",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
