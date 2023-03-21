@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: theme,
       toggleTheme: toggleTheme,
       child: CupertinoApp(
-        title: 'Piano Tools',
+        title: 'Instrumental Studying Helper',
         theme: CupertinoThemeData(brightness: theme),
         home: const HomePage(),
       ),

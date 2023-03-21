@@ -1,6 +1,6 @@
 {
-    "name": "instrument_study_helper",
-    "short_name": "instrument_study_helper",
+    "name": "instrumental_studying_helper",
+    "short_name": "instrumental_studying_helper",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
