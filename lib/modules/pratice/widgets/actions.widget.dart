@@ -45,8 +45,8 @@ class _ActionsState extends State<Actions> {
                 onPressed: actions.toggleAudio,
                 child: Icon(
                   actions.useAudio
-                      ? CupertinoIcons.volume_off
-                      : CupertinoIcons.volume_mute,
+                      ? CupertinoIcons.volume_mute
+                      : CupertinoIcons.volume_off,
                 ),
               ),
             ],

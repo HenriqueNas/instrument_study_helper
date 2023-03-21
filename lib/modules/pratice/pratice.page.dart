@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart' hide Actions;
 import 'package:instrumental_studying_helper/modules/pratice/states/actions.state.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,8 @@ class PraticePage extends StatefulWidget {
 }
 
 class _PraticePageState extends State<PraticePage> {
+  final player = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
     final notes = context.watch<NotesState>();
@@ -47,7 +50,9 @@ class _PraticePageState extends State<PraticePage> {
     Stream<String> randomAccordLoop() async* {
       while (actions.isPlaying) {
         await Future<void>.delayed(Duration(seconds: actions.time.toInt()));
-        // await player.play(AssetSource('assets/metronome.mp3'));
+
+        if (actions.useAudio) await player.play(AssetSource('metronome.mp3'));
+
         yield randomAccord();
       }
     }

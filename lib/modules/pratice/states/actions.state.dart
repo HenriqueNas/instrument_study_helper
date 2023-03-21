@@ -6,6 +6,8 @@ class ActionsState extends ChangeNotifier {
   double get time => _time;
 
   void setTime(double value) {
+    stopPlayer();
+
     _time = value;
     notifyListeners();
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import 'home.page.dart';
 import 'modules/pratice/states/actions.state.dart';
@@ -47,8 +49,22 @@ class _MyAppState extends State<MyApp> {
       ],
       child: CupertinoApp(
         title: 'Instrumental Studying Helper',
+        builder: (context, child) {
+          return ResponsiveWrapper.builder(
+            child,
+            maxWidth: 1200,
+            minWidth: 450,
+            background: Container(
+              color: CupertinoTheme.of(context).barBackgroundColor,
+            ),
+          );
+        },
+        routes: {
+          '/': (context) => const HomePage(),
+        },
+        initialRoute: '/',
         theme: CupertinoThemeData(brightness: themeState.theme),
-        home: const HomePage(),
+        debugShowCheckedModeBanner: kDebugMode,
       ),
     );
   }

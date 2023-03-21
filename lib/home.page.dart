@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
-      backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
+      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       tabBar: CupertinoTabBar(
         height: 60,
         items: const <BottomNavigationBarItem>[
