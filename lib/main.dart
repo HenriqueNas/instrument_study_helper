@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import 'home.page.dart';
-import 'theme/theme.provider.dart';
+import 'modules/pratice/states/actions.state.dart';
+import 'modules/pratice/states/notes.state.dart';
+import 'theme/theme.state.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,24 +18,36 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Brightness theme = Brightness.light;
+  final themeState = ThemeState(
+    theme: WidgetsBinding.instance.window.platformBrightness,
+  );
 
-  void toggleTheme() {
-    setState(() {
-      theme = theme == Brightness.light //
-          ? Brightness.dark //
-          : Brightness.light;
+  @override
+  void initState() {
+    super.initState();
+
+    themeState.addListener(() {
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ThemeProvider(
-      themeMode: theme,
-      toggleTheme: toggleTheme,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeState>.value(
+          value: themeState,
+        ),
+        ChangeNotifierProvider<NotesState>.value(
+          value: NotesState(),
+        ),
+        ChangeNotifierProvider<ActionsState>.value(
+          value: ActionsState(),
+        ),
+      ],
       child: CupertinoApp(
         title: 'Instrumental Studying Helper',
-        theme: CupertinoThemeData(brightness: theme),
+        theme: CupertinoThemeData(brightness: themeState.theme),
         home: const HomePage(),
       ),
     );

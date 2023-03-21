@@ -1,39 +1,37 @@
 import 'package:flutter/cupertino.dart';
-import '../../../entities/accidentals_notes.dart';
+import 'package:instrumental_studying_helper/modules/pratice/states/notes.state.dart';
+import 'package:provider/provider.dart';
+import '../../../entities/accidentals.dart';
 
 class AccidentalTile extends StatefulWidget {
   const AccidentalTile({super.key, required this.acidental});
 
-  final AccidentalsNotesEnum acidental;
+  final AccidentalsEnum acidental;
 
   @override
   State<AccidentalTile> createState() => _AccidentalTileState();
 }
 
 class _AccidentalTileState extends State<AccidentalTile> {
-  bool value = false;
-
-  void _toggleValue(bool newValue) {
-    setState(() {
-      value = newValue;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final notes = context.watch<NotesState>();
+
+    bool value = notes.getValueByAccidental(widget.acidental);
+
     return CupertinoListTile(
       title: Text(
-        AccidentalsNotes.accidentalSemanticsFromEnum(widget.acidental),
+        Accidentals.accidentalSemanticsFromEnum(widget.acidental),
         style: const TextStyle(fontSize: 12),
       ),
       leading: Text(
-        AccidentalsNotes.accidentalFromEnum(widget.acidental),
+        Accidentals.accidentalFromEnum(widget.acidental),
         style: const TextStyle(fontSize: 16),
       ),
       leadingToTitle: 8,
       trailing: CupertinoSwitch(
         value: value,
-        onChanged: _toggleValue,
+        onChanged: (_) => notes.toggleAccidental(widget.acidental),
       ),
     );
   }

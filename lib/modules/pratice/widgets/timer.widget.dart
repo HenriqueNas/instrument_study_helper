@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-
-import '../pratice.provider.dart';
+import 'package:instrumental_studying_helper/modules/pratice/states/actions.state.dart';
+import 'package:provider/provider.dart';
 
 class Timer extends StatefulWidget {
   const Timer({super.key});
@@ -12,14 +12,14 @@ class Timer extends StatefulWidget {
 class _TimerState extends State<Timer> {
   @override
   Widget build(BuildContext context) {
-    final provider = PraticeProvider.of(context);
+    final actions = context.watch<ActionsState>();
 
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            '${provider.time.toStringAsFixed(2)} segundos',
+            '${actions.time.toStringAsFixed(2)} segundos',
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -30,8 +30,8 @@ class _TimerState extends State<Timer> {
             child: CupertinoSlider(
               min: 1,
               max: 15,
-              value: provider.time,
-              onChanged: provider.setTime,
+              value: actions.time,
+              onChanged: actions.setTime,
             ),
           ),
         ],

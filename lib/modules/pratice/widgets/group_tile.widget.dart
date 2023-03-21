@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:instrumental_studying_helper/modules/pratice/states/notes.state.dart';
+import 'package:provider/provider.dart';
 
 import '../../../entities/notes_groups.dart';
 
@@ -12,26 +14,22 @@ class GroupTile extends StatefulWidget {
 }
 
 class _GroupTileState extends State<GroupTile> {
-  bool value = false;
-
-  void _toggleValue(bool newValue) {
-    setState(() {
-      value = newValue;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final notes = context.watch<NotesState>();
+
+    bool value = notes.getValueByGroup(widget.group);
+
     return CupertinoListTile(
       title: Text(NotesGroups.notesEnumSemanticsFromEnum(widget.group)),
       subtitle: Text(
-        NotesGroups.notesFromEnum(widget.group),
+        NotesGroups.notesFromEnumToString(widget.group),
         maxLines: 1,
       ),
       leadingToTitle: 8,
       trailing: CupertinoSwitch(
         value: value,
-        onChanged: _toggleValue,
+        onChanged: (_) => notes.toggleGroup(widget.group),
       ),
     );
   }

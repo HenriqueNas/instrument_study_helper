@@ -38,7 +38,7 @@ class NotesGroups {
     NotesGroupsEnum.fourth: fourth,
   };
 
-  static String notesFromEnum(NotesGroupsEnum notesEnum) {
+  static String notesFromEnumToString(NotesGroupsEnum notesEnum) {
     return notesGroupsEnumMap[notesEnum]!.join(' ');
   }
 

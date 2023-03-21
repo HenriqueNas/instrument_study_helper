@@ -11,8 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 final screens = [
-  const Center(child: Text('Metrônomo')),
   const PraticePage(),
+  const Center(child: Text('Metrônomo')),
   const SettingsPage(),
 ];
 
@@ -33,12 +33,12 @@ class _HomePageState extends State<HomePage> {
         height: 60,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.metronome),
-            label: 'Metrônomo',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.music_note_list),
             label: 'Praticar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.metronome),
+            label: 'Metrônomo',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.settings_solid),
