@@ -1,4 +1,4 @@
-package com.example.instrumental_studying_helper
+package dev.henriquenas.instrumental_studying_helper
 
 import io.flutter.embedding.android.FlutterActivity
 

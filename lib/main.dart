@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
         },
         initialRoute: '/',
         theme: CupertinoThemeData(brightness: themeState.theme),
-        debugShowCheckedModeBanner: kDebugMode,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

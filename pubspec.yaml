@@ -17,6 +17,7 @@ dependencies:
   url_launcher: ^6.1.10
   provider: ^6.0.5
   responsive_framework: ^0.2.0
+  flutter_launcher_icons: ^0.12.0
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +28,13 @@ dev_dependencies:
 flutter:
   assets:
     - assets/metronome.mp3
+
+flutter_icons:
+  android: "launcher_icon"
+  image_path: "assets/icon.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/icon.png"
+    background_color: "#FFF"
+    theme_color: "#007aff"
