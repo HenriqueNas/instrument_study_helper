@@ -2,15 +2,12 @@ import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart' hide Actions;
-import 'package:instrumental_studying_helper/modules/pratice/states/actions.state.dart';
 import 'package:provider/provider.dart';
 
-import '../../entities/accidentals.dart';
-import '../../entities/notes_groups.dart';
-import 'states/notes.state.dart';
-import 'widgets/accidental_tile.widget.dart';
+import '../../core/tuple.dart';
+import 'states/accord.state.dart';
+import 'states/actions.state.dart';
 import 'widgets/actions.widget.dart';
-import 'widgets/group_tile.widget.dart';
 
 class PraticePage extends StatefulWidget {
   const PraticePage({super.key});
@@ -23,103 +20,95 @@ class _PraticePageState extends State<PraticePage> {
   final player = AudioPlayer();
 
   @override
+  void dispose() {
+    super.dispose();
+
+    context.read<AccordState>().dispose();
+    context.read<ActionsState>().dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final notes = context.watch<NotesState>();
+    final accord = context.watch<AccordState>();
     final actions = context.watch<ActionsState>();
 
-    final bgColor = CupertinoTheme.of(context).barBackgroundColor;
-
     String randomAccord() {
-      if (notes.notes.isEmpty) return '';
+      if (accord.notes.isEmpty) return '';
 
       final random = Random();
 
-      final nextNote = random.nextInt(notes.notes.length);
-      final randomNote = notes.notes[nextNote];
+      final nextNote = random.nextInt(accord.notes.length);
+      final randomNote = accord.notes[nextNote];
 
-      if (notes.accidentals.isEmpty || random.nextBool()) {
+      if (accord.variants.isEmpty || random.nextBool()) {
         return randomNote;
       }
 
-      final nextAccidental = random.nextInt(notes.accidentals.length);
-      final randomAccidental = notes.accidentals[nextAccidental];
+      final nextVariant = random.nextInt(accord.variants.length);
+      final randomVariant = accord.variants[nextVariant];
 
-      return randomNote + randomAccidental;
+      return randomNote + randomVariant;
     }
 
-    Stream<String> randomAccordLoop() async* {
+    String randomInversion() {
+      if (accord.inversions.isEmpty) return '';
+
+      final random = Random();
+
+      final nextInversion = random.nextInt(accord.inversions.length);
+      final randomInversion = accord.inversions[nextInversion];
+
+      return randomInversion;
+    }
+
+    Stream<Tuple<String, String>> randomAccordLoop() async* {
       while (actions.isPlaying) {
         await Future<void>.delayed(Duration(seconds: actions.time.toInt()));
 
         if (actions.useAudio) await player.play(AssetSource('metronome.mp3'));
 
-        yield randomAccord();
+        yield Tuple(randomAccord(), randomInversion());
       }
     }
 
     return SafeArea(
-      child: LayoutBuilder(
-        builder: (context, constraint) => SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Container(
-            constraints: BoxConstraints(minHeight: constraint.maxHeight),
-            decoration: BoxDecoration(color: bgColor),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const SizedBox.shrink(),
-                  Padding(
-                    padding: const EdgeInsets.all(40),
-                    child: StreamBuilder<String>(
-                      initialData: randomAccord(),
-                      stream: randomAccordLoop(),
-                      builder: (context, snapshot) {
-                        return Text(
-                          snapshot.data ?? '',
-                          style: const TextStyle(
-                            fontSize: 120,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const Actions(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const SizedBox.shrink(),
+            Padding(
+              padding: const EdgeInsets.all(40),
+              child: StreamBuilder<Tuple<String, String>>(
+                initialData: Tuple(randomAccord(), randomInversion()),
+                stream: randomAccordLoop(),
+                builder: (context, snapshot) {
+                  final tuple = snapshot.data;
+
+                  return Column(
                     children: [
-                      Expanded(
-                        child: CupertinoListSection.insetGrouped(
-                          backgroundColor: bgColor,
-                          header: const Text('Acidentes'),
-                          margin: const EdgeInsets.all(16),
-                          children: [
-                            for (var accidental in AccidentalsEnum.values)
-                              AccidentalTile(acidental: accidental),
-                          ],
+                      Text(
+                        tuple?.$0 ?? '',
+                        style: const TextStyle(
+                          fontSize: 120,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Expanded(
-                        child: CupertinoListSection.insetGrouped(
-                          backgroundColor: bgColor,
-                          header: const Text('Grupos'),
-                          margin: const EdgeInsets.all(16),
-                          topMargin: 0,
-                          additionalDividerMargin: 0,
-                          children: [
-                            for (var group in NotesGroupsEnum.values)
-                              GroupTile(group: group),
-                          ],
+                      Text(
+                        tuple?.$1 ?? '',
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          ),
+            const Actions(),
+          ],
         ),
       ),
     );

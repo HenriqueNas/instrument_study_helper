@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'core/theme/theme.state.dart';
 import 'home.page.dart';
 import 'modules/pratice/states/actions.state.dart';
-import 'modules/pratice/states/notes.state.dart';
-import 'theme/theme.state.dart';
+import 'modules/pratice/states/accord.state.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final themeState = ThemeState(
-    theme: WidgetsBinding.instance.window.platformBrightness,
+    themeMode: WidgetsBinding.instance.window.platformBrightness,
   );
 
   @override
@@ -37,34 +37,35 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ThemeState>.value(
-          value: themeState,
-        ),
-        ChangeNotifierProvider<NotesState>.value(
-          value: NotesState(),
-        ),
-        ChangeNotifierProvider<ActionsState>.value(
-          value: ActionsState(),
-        ),
+        ThemeState.provider(themeState),
+        AccordState.provider(),
+        ActionsState.provider(),
       ],
       child: CupertinoApp(
         title: 'Instrumental Studying Helper',
-        builder: (context, child) {
+        builder: (cupertinoCtx, child) {
+          final backgroundColor = CupertinoDynamicColor.resolve(
+            CupertinoColors.systemBackground,
+            cupertinoCtx,
+          );
+
           return ResponsiveWrapper.builder(
             child,
             maxWidth: 1200,
             minWidth: 450,
-            background: Container(
-              color: CupertinoTheme.of(context).barBackgroundColor,
-            ),
+            defaultScale: true,
+            breakpoints: [
+              const ResponsiveBreakpoint.resize(450, name: MOBILE),
+              const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+              const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+            ],
+            backgroundColor: backgroundColor,
+            background: Container(color: backgroundColor),
           );
         },
-        routes: {
-          '/': (context) => const HomePage(),
-        },
-        initialRoute: '/',
-        theme: CupertinoThemeData(brightness: themeState.theme),
-        debugShowCheckedModeBanner: false,
+        home: const HomePage(),
+        theme: themeState.theme,
+        debugShowCheckedModeBanner: kDebugMode,
       ),
     );
   }

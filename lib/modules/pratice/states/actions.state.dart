@@ -1,6 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class ActionsState extends ChangeNotifier {
+  ActionsState._();
+
+  static ChangeNotifierProvider<ActionsState> provider() {
+    return ChangeNotifierProvider<ActionsState>.value(
+      value: ActionsState._(),
+    );
+  }
+
   double _time = 5;
 
   double get time => _time;
@@ -31,5 +40,11 @@ class ActionsState extends ChangeNotifier {
   void toggleAudio() {
     _useAudio = !useAudio;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    stopPlayer();
+    super.dispose();
   }
 }

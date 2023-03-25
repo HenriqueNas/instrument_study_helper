@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-class BaseNotes {
+abstract class BaseNotes {
   static const String sharp = '#';
   static const String flat = 'b';
 

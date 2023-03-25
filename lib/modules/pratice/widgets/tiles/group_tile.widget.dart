@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:instrumental_studying_helper/modules/pratice/states/notes.state.dart';
 import 'package:provider/provider.dart';
 
-import '../../../entities/notes_groups.dart';
+import '../../../../entities/notes_groups.dart';
+import '../../states/accord.state.dart';
 
 class GroupTile extends StatefulWidget {
   const GroupTile({super.key, required this.group});
@@ -16,12 +16,19 @@ class GroupTile extends StatefulWidget {
 class _GroupTileState extends State<GroupTile> {
   @override
   Widget build(BuildContext context) {
-    final notes = context.watch<NotesState>();
+    final pageWidth = MediaQuery.of(context).size.width;
+    final isMobileSize = pageWidth < 600;
 
-    bool value = notes.getValueByGroup(widget.group);
+    final groupName = isMobileSize
+        ? NotesGroups.notesGroupShortSemanticsFromEnum(widget.group)
+        : NotesGroups.notesGroupSemanticsFromEnum(widget.group);
+
+    final accord = context.watch<AccordState>();
+
+    bool value = accord.getValueByGroup(widget.group);
 
     return CupertinoListTile(
-      title: Text(NotesGroups.notesEnumSemanticsFromEnum(widget.group)),
+      title: Text(groupName),
       subtitle: Text(
         NotesGroups.notesFromEnumToString(widget.group),
         maxLines: 1,
@@ -29,7 +36,7 @@ class _GroupTileState extends State<GroupTile> {
       leadingToTitle: 8,
       trailing: CupertinoSwitch(
         value: value,
-        onChanged: (_) => notes.toggleGroup(widget.group),
+        onChanged: (_) => accord.toggleGroup(widget.group),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'base_notes.dart';
 
-class NotesGroups {
+abstract class NotesGroups {
   static final List<String> first = [
     BaseNotes.C,
     BaseNotes.F,
@@ -42,7 +42,7 @@ class NotesGroups {
     return notesGroupsEnumMap[notesEnum]!.join(' ');
   }
 
-  static String notesEnumSemanticsFromEnum(NotesGroupsEnum notesEnum) {
+  static String notesGroupSemanticsFromEnum(NotesGroupsEnum notesEnum) {
     switch (notesEnum) {
       case NotesGroupsEnum.first:
         return '1º grupo';
@@ -53,6 +53,12 @@ class NotesGroups {
       case NotesGroupsEnum.fourth:
         return '4º grupo';
     }
+  }
+
+  static String notesGroupShortSemanticsFromEnum(NotesGroupsEnum notesEnum) {
+    final semanticGroup = notesGroupSemanticsFromEnum(notesEnum);
+
+    return semanticGroup.replaceAll(' grupo', '');
   }
 }
 

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:instrumental_studying_helper/modules/pratice/states/actions.state.dart';
 import 'package:provider/provider.dart';
 
+import '../settings.page.dart';
+import '../states/actions.state.dart';
 import 'timer.widget.dart';
 
 class Actions extends StatefulWidget {
@@ -16,15 +17,15 @@ class _ActionsState extends State<Actions> {
   Widget build(BuildContext context) {
     final actions = context.watch<ActionsState>();
 
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const Timer(),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const Timer(),
+            Row(children: [
               CupertinoButton(
                 onPressed: actions.startPlayer,
                 child: Icon(
@@ -49,8 +50,34 @@ class _ActionsState extends State<Actions> {
                       : CupertinoIcons.volume_off,
                 ),
               ),
-            ],
-          ),
+            ]),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 400, minWidth: 200),
+              child: CupertinoButton.filled(
+                padding: const EdgeInsets.all(16),
+                onPressed: () => Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => const PraticeSettingsPage(),
+                )),
+                child: const Text('Configurações'),
+              ),
+            ),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 400, minWidth: 200),
+              child: CupertinoButton.filled(
+                padding: const EdgeInsets.all(16),
+                onPressed: () => Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => const PraticeSettingsPage(),
+                )),
+                child: const Text('Acordes'),
+              ),
+            ),
+          ],
         ),
       ],
     );

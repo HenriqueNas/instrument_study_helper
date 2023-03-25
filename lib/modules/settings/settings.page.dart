@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:instrumental_studying_helper/theme/theme.state.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../core/theme/theme.state.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -19,8 +20,8 @@ class SettingsPage extends StatelessWidget {
           Expanded(
             flex: 1,
             child: CupertinoButton(
-              onPressed: theme.toggleTheme,
-              child: Icon(theme.icon, size: 48),
+              onPressed: theme.toggleThemeMode,
+              child: Icon(theme.themeModeIcon, size: 48),
             ),
           ),
           const Spacer(flex: 1),
