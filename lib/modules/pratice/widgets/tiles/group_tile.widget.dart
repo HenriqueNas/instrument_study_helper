@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Actions;
 import 'package:provider/provider.dart';
 
 import '../../../../entities/notes_groups.dart';
@@ -27,14 +27,13 @@ class _GroupTileState extends State<GroupTile> {
 
     bool value = accord.getValueByGroup(widget.group);
 
-    return CupertinoListTile(
+    return ListTile(
       title: Text(groupName),
       subtitle: Text(
         NotesGroups.notesFromEnumToString(widget.group),
         maxLines: 1,
       ),
-      leadingToTitle: 8,
-      trailing: CupertinoSwitch(
+      trailing: Switch(
         value: value,
         onChanged: (_) => accord.toggleGroup(widget.group),
       ),

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Actions;
 import 'package:provider/provider.dart';
 
 import '../states/actions.state.dart';
@@ -27,7 +27,7 @@ class _TimerState extends State<Timer> {
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.3,
-          child: CupertinoSlider(
+          child: Slider(
             min: 1,
             max: 15,
             value: actions.time,

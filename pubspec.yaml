@@ -1,17 +1,15 @@
 name: instrumental_studying_helper
 description: A simple tool to help you study your instrument.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.3 <3.0.0'
+  sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
   audioplayers: ^3.0.1
   qr_flutter: ^4.0.0
   url_launcher: ^6.1.10
@@ -26,6 +24,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+  uses-material-design: true
   assets:
     - assets/metronome.mp3
 

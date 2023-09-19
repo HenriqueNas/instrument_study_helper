@@ -1,12 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' hide Actions;
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'core/theme/theme.state.dart';
 import 'home.page.dart';
-import 'modules/pratice/states/actions.state.dart';
+import 'modules/pratice/advanced.page.dart';
+import 'modules/pratice/settings.page.dart';
 import 'modules/pratice/states/accord.state.dart';
+import 'modules/pratice/states/actions.state.dart';
+import 'modules/settings/settings.page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,9 +22,11 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+final a = Container();
+
 class _MyAppState extends State<MyApp> {
   final themeState = ThemeState(
-    themeMode: WidgetsBinding.instance.window.platformBrightness,
+    themeMode: Brightness.light,
   );
 
   @override
@@ -41,13 +46,13 @@ class _MyAppState extends State<MyApp> {
         AccordState.provider(),
         ActionsState.provider(),
       ],
-      child: CupertinoApp(
+      child: MaterialApp(
         title: 'Instrumental Studying Helper',
         builder: (cupertinoCtx, child) {
-          final backgroundColor = CupertinoDynamicColor.resolve(
-            CupertinoColors.systemBackground,
-            cupertinoCtx,
-          );
+          // final backgroundColor = CupertinoDynamicColor.resolve(
+          //   Colors.systemBackground,
+          //   cupertinoCtx,
+          // );
 
           return ResponsiveWrapper.builder(
             child,
@@ -59,13 +64,19 @@ class _MyAppState extends State<MyApp> {
               const ResponsiveBreakpoint.autoScale(800, name: TABLET),
               const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
             ],
-            backgroundColor: backgroundColor,
-            background: Container(color: backgroundColor),
+            // backgroundColor: backgroundColor,
+            // background: Container(color: backgroundColor),
           );
         },
-        home: const HomePage(),
         theme: themeState.theme,
         debugShowCheckedModeBanner: kDebugMode,
+        initialRoute: '/',
+        routes: {
+          '/': (_) => const HomePage(),
+          '/settings': (_) => const SettingsPage(),
+          AdvancedPage.routeName: (_) => const AdvancedPage(),
+          PraticeSettingsPage.routeName: (_) => const PraticeSettingsPage(),
+        },
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Actions;
 import 'package:provider/provider.dart';
 
 import '../../../../entities/inversions.dart';
@@ -17,10 +17,9 @@ class InversionTile extends StatelessWidget {
 
     bool value = accord.getValueByInversion(inversion);
 
-    return CupertinoListTile(
+    return ListTile(
       title: Text(inversionTitle),
-      leadingToTitle: 8,
-      trailing: CupertinoSwitch(
+      trailing: Switch(
         value: value,
         onChanged: (_) => accord.toggleInversion(inversion),
       ),

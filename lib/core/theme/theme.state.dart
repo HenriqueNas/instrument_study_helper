@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Actions;
 import 'package:provider/provider.dart';
 
 class ThemeState extends ChangeNotifier {
@@ -11,19 +11,22 @@ class ThemeState extends ChangeNotifier {
   ThemeState({
     required Brightness themeMode,
   })  : _themeMode = themeMode,
-        _theme = CupertinoThemeData(brightness: themeMode);
+        _theme = ThemeData(
+          brightness: themeMode,
+          useMaterial3: true,
+        );
 
-  CupertinoThemeData _theme;
+  ThemeData _theme;
 
-  CupertinoThemeData get theme => _theme;
+  ThemeData get theme => _theme;
 
   Brightness _themeMode;
 
   Brightness get themeMode => _themeMode;
 
   IconData get themeModeIcon => themeMode == Brightness.light //
-      ? CupertinoIcons.moon_stars
-      : CupertinoIcons.sun_max;
+      ? Icons.dark_mode
+      : Icons.light_mode;
 
   bool get isDark => themeMode == Brightness.dark;
 
@@ -32,7 +35,7 @@ class ThemeState extends ChangeNotifier {
         ? Brightness.dark //
         : Brightness.light;
 
-    _theme = CupertinoThemeData(brightness: themeMode);
+    _theme = ThemeData(brightness: themeMode);
 
     notifyListeners();
   }

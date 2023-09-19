@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Actions;
 import 'package:provider/provider.dart';
 
 import '../../../../entities/variants.dart';
@@ -23,7 +23,7 @@ class _VariantsTileState extends State<VariantsTile> {
 
     bool value = accord.getValueByVariant(widget.acidental);
 
-    return CupertinoListTile(
+    return ListTile(
       title: Text(
         Variants.variantsSemanticsFromEnum(widget.acidental),
         style: const TextStyle(fontSize: 12),
@@ -34,8 +34,7 @@ class _VariantsTileState extends State<VariantsTile> {
               Variants.variantsFromEnum(widget.acidental),
               style: const TextStyle(fontSize: 16),
             ),
-      leadingToTitle: 8,
-      trailing: CupertinoSwitch(
+      trailing: Switch(
         value: value,
         onChanged: (_) => accord.toggleVariant(widget.acidental),
       ),

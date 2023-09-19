@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Actions;
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,7 +19,7 @@ class SettingsPage extends StatelessWidget {
           const Spacer(flex: 1),
           Expanded(
             flex: 1,
-            child: CupertinoButton(
+            child: TextButton(
               onPressed: theme.toggleThemeMode,
               child: Icon(theme.themeModeIcon, size: 48),
             ),
@@ -28,7 +28,7 @@ class SettingsPage extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Column(children: [
-              CupertinoButton(
+              TextButton(
                 onPressed: () => launchUrl(
                   Uri.parse('https://www.henriquenas.dev/'),
                 ),
@@ -39,9 +39,7 @@ class SettingsPage extends StatelessWidget {
                 version: QrVersions.auto,
                 size: MediaQuery.of(context).size.height * 0.25,
                 semanticsLabel: 'Pix QR Code',
-                foregroundColor: theme.isDark
-                    ? CupertinoColors.white
-                    : CupertinoColors.black,
+                foregroundColor: theme.isDark ? Colors.white : Colors.black,
               ),
               const Text('buy me a coffee'),
             ]),

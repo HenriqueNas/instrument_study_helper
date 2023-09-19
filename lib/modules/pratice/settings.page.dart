@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide Actions;
 
 import '../../entities/inversions.dart';
 import '../../entities/notes_groups.dart';
@@ -10,65 +10,54 @@ import 'widgets/tiles/variants_tile.widget.dart';
 class PraticeSettingsPage extends StatelessWidget {
   const PraticeSettingsPage({super.key});
 
+  static const String routeName = '/pratice-settings';
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
-          previousPageTitle: 'Voltar',
-          middle: Text('Configurações de prática'),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Configurações de prática'),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: kMinInteractiveDimensionCupertino,
-          ),
-          child: Row(
+        body: Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Text('Grupos'),
+              ),
+              for (var group in NotesGroupsEnum.values) GroupTile(group: group),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    CupertinoListSection.insetGrouped(
-                      header: const Text('Variantes'),
-                      margin: const EdgeInsets.all(16),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Text('Variantes'),
+                        ),
                         for (var variant in VariantsEnum.values)
                           VariantsTile(acidental: variant),
                       ],
                     ),
-                    CupertinoListSection.insetGrouped(
-                      header: const Text('Inversões'),
-                      margin: const EdgeInsets.all(16),
-                      topMargin: 0,
-                      additionalDividerMargin: 0,
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Text('Inversões'),
+                        ),
                         for (var inversion in InversionsEnum.values)
                           InversionTile(inversion: inversion),
                       ],
                     ),
-                    Expanded(
-                      child: Container(
-                        constraints: const BoxConstraints.expand(),
-                        color: CupertinoDynamicColor.resolve(
-                          CupertinoColors.systemGroupedBackground,
-                          context,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: CupertinoListSection.insetGrouped(
-                  header: const Text('Grupos'),
-                  margin: const EdgeInsets.all(16),
-                  topMargin: 0,
-                  additionalDividerMargin: 0,
-                  children: [
-                    for (var group in NotesGroupsEnum.values)
-                      GroupTile(group: group),
                   ],
                 ),
               ),

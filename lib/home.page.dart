@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'modules/pratice/pratice.page.dart';
 import 'modules/settings/settings.page.dart';
@@ -27,34 +27,26 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      tabBar: CupertinoTabBar(
-        height: 60,
+    return Scaffold(
+      body: screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.music_note_list),
+            icon: Icon(Icons.music_note),
             label: 'Praticar',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.metronome),
+            icon: Icon(Icons.timer),
             label: 'Metrônomo',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.settings_solid),
+            icon: Icon(Icons.settings),
             label: 'Configurações',
           ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      tabBuilder: (context, index) {
-        return CupertinoTabView(
-          builder: (context) {
-            return screens[index];
-          },
-        );
-      },
     );
   }
 }
